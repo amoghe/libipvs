@@ -10,6 +10,7 @@ This project provides a pure Go client to communicate with IPVS kernel module us
 ### Implemented Methods
 ```Golang
 type IPVSHandle interface {
+	Close()
 	Flush() error
 	GetInfo() (info Info, err error)
 	ListServices() (services []*Service, err error)

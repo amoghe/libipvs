@@ -13,6 +13,7 @@ import (
 )
 
 type IPVSHandle interface {
+	Close()
 	Flush() error
 	GetInfo() (info Info, err error)
 	ListServices() (services []*Service, err error)
@@ -82,6 +83,10 @@ func NewIPVSHandle(params IPVSHandleParams) (IPVSHandle, error) {
 }
 
 var emptyAttrs = nlgo.AttrSlice{}
+
+func (i *Handle) Close() {
+	i.genlHub.Close()
+}
 
 func (i *Handle) Flush() error {
 	return i.doCmd(IPVS_CMD_FLUSH, syscall.NLM_F_ACK, emptyAttrs, nil)
